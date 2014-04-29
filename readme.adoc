@@ -158,7 +158,8 @@ How do I enable auto-indexing for manual index in Neo4j?::
 		This is a legacy feature! See http://docs.neo4j.org/chunked/stable/query-schema-index.html[the current Cypher doc]
 		for the recommended approach to this.
         For older approaches, you have to enable auto indexing in the Neo4J server configuration.  Edit the *neo4j.properties* file:
-
++
+----
         # Autoindexing
 
 		# Enable auto-indexing for nodes, default is false
@@ -172,9 +173,9 @@ How do I enable auto-indexing for manual index in Neo4j?::
 
 		# The relationship property keys to be auto-indexed, if enabled
 		relationship_keys_indexable=name,age
-
+----
 +
 Be sure to restart the server.  Once you've enabled it, by default your nodes and relationships will be indexed lazily.
 (See also: http://docs.neo4j.org/chunked/milestone/auto-indexing.html#auto-indexing-config[the docs])
-
++
 We'll be replacing indexing in the future.
