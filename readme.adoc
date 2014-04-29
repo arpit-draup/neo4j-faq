@@ -125,7 +125,7 @@ WebAdmin shows that there are nodes in my database, when I just deleted them all
 		perform quite an expensive query to do so. However since most graphs end up being
 		hundreds of thousands/millions/billions of nodes then being 1000 or so out doesn't matter
 		all that much to the ops folks which is why Webadmin makes a far cheaper call.
-
++
 		If you run a cluster, the Webadmin view of number of nodes will be even more inconsistent
 		since each instance in the cluster gets its own set of IDs to hand out. Again for large graphs,
 		this is inconsequential, but for checking the correctness of your data during development, run the
@@ -141,9 +141,9 @@ What's the Reference Node, and why should I care?::
 
 		The reference node is not special and a legacy thing. It just happened to be a node that exists when the database
 		(pre 2.0) was started. That it happens to have ID 0 should be unimportant.
-
-		Ignore it. Your nodes are important, your indexes are important. The reference node is not.
-		The reference node is removed in current releases of Neo4j.
++
+Ignore it. Your nodes are important, your indexes are important. The reference node is not.
+The reference node is removed in current releases of Neo4j.
 
 How do I see what's in a manual Index?::
 
@@ -160,19 +160,19 @@ How do I enable auto-indexing for manual index in Neo4j?::
         For older approaches, you have to enable auto indexing in the Neo4J server configuration.  Edit the *neo4j.properties* file:
 +
 ----
-        # Autoindexing
+# Autoindexing
 
-		# Enable auto-indexing for nodes, default is false
-		node_auto_indexing=true
+# Enable auto-indexing for nodes, default is false
+node_auto_indexing=true
 
-		# The node property keys to be auto-indexed, if enabled
-		node_keys_indexable=name,age
+# The node property keys to be auto-indexed, if enabled
+node_keys_indexable=name,age
 
-		# Enable auto-indexing for relationships, default is false
-		relationship_auto_indexing=true
+# Enable auto-indexing for relationships, default is false
+relationship_auto_indexing=true
 
-		# The relationship property keys to be auto-indexed, if enabled
-		relationship_keys_indexable=name,age
+# The relationship property keys to be auto-indexed, if enabled
+relationship_keys_indexable=name,age
 ----
 +
 Be sure to restart the server.  Once you've enabled it, by default your nodes and relationships will be indexed lazily.
