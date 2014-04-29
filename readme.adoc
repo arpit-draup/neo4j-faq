@@ -148,22 +148,18 @@ What's the Reference Node, and why should I care?::
 How do I see what's in a manual Index?::
 
 		If you want to find out the contents of a manual index, it's quite easy in Cypher.
+        For a node index called "people" you just use this:
 
-		For a node index called "people" you just use this:
-
-		    START n=node:people('*:*')
-		    RETURN n
+		START n=node:people('*:*')
+		RETURN n
 
 How do I enable auto-indexing for manual index in Neo4j?::
 
 		This is a legacy feature! See http://docs.neo4j.org/chunked/stable/query-schema-index.html[the current Cypher doc]
 		for the recommended approach to this.
+        For older approaches, you have to enable auto indexing in the Neo4J server configuration.  Edit the *neo4j.properties* file:
 
-		For older approaches, you have to enable auto indexing in the Neo4J server configuration.  Edit the *neo4j.properties* file:
-
-        [source]
-        ----
-		# Autoindexing
+        # Autoindexing
 
 		# Enable auto-indexing for nodes, default is false
 		node_auto_indexing=true
@@ -171,14 +167,14 @@ How do I enable auto-indexing for manual index in Neo4j?::
 		# The node property keys to be auto-indexed, if enabled
 		node_keys_indexable=name,age
 
-
 		# Enable auto-indexing for relationships, default is false
 		relationship_auto_indexing=true
 
 		# The relationship property keys to be auto-indexed, if enabled
 		relationship_keys_indexable=name,age
 
-		Be sure to restart the server.  Once you've enabled it, by default your nodes and relationships will be indexed lazily.
-		(See also: http://docs.neo4j.org/chunked/milestone/auto-indexing.html#auto-indexing-config[the docs])
++
+Be sure to restart the server.  Once you've enabled it, by default your nodes and relationships will be indexed lazily.
+(See also: http://docs.neo4j.org/chunked/milestone/auto-indexing.html#auto-indexing-config[the docs])
 
-		We'll be replacing indexing in the future.
+We'll be replacing indexing in the future.
