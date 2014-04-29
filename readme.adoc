@@ -119,57 +119,66 @@ How do I import my data into Neo4j?::
         Future data load/refresh should go directly to Production server
         SQL Importer (built on top of Batch Inserter) is not officially supported.
 
+WebAdmin shows that there are nodes in my database, when I just deleted them all?::
 
-		Neo4j FAQ
-		=========
+		If Webadmin is going to give the accurate number, then it's going to have to
+		perform quite an expensive query to do so. However since most graphs end up being
+		hundreds of thousands/millions/billions of nodes then being 1000 or so out doesn't matter
+		all that much to the ops folks which is why Webadmin makes a far cheaper call.
 
-		Unofficial Neo4j Frequently Asked Questions
+		If you run a cluster, the Webadmin view of number of nodes will be even more inconsistent
+		since each instance in the cluster gets its own set of IDs to hand out. Again for large graphs,
+		this is inconsequential, but for checking the correctness of your data during development, run the
+		Cypher count query `match (n) return count(n)`
 
-		### <a id="nodeinflation">WebAdmin shows that there are nodes in my database, when I just deleted them all</a> ###
+Are Node ID's like an Identity Column?::
 
-		If Webadmin is going to give the accurate number, then it's going to have to perform quite an expensive query to do so. However since most graphs end up being hundreds of thousands/millions/billions of nodes then being 1000 or so out doesn't matter all that much to the ops folks which is why Webadmin makes a far cheaper call.
+		No!  The Node ID is only exposed through the API as a convenience to developers.  Node IDs
+		can and do get reused, so never use them to identify anything in the real world, and never
+		make references to Node by ID from another system.  It'll only hurt.
 
-		If you run a cluster, the Webadmin view of number of nodes will be even more inconsistent since each instance in the cluster gets its own set of IDs to hand out. Again for large graphs, this is inconsequential, but for checking the correctness of your data during development, run the count query.
+What's the Reference Node, and why should I care?::
 
-		### <a id="nodeid">Are Node ID's like an Identity Column?</a> ###
+		The reference node is not special and a legacy thing. It just happened to be a node that exists when the database
+		(pre 2.0) was started. That it happens to have ID 0 should be unimportant.
 
-		No!  The Node ID is only exposed through the API as a convenience to developers.  Node IDs can and do get reused, so never use them to identify anything in the real world, and never make references to Node by ID from another system.  It'll only hurt. 
+		Ignore it. Your nodes are important, your indexes are important. The reference node is not.
+		The reference node is removed in current releases of Neo4j.
 
-		### <a id="refnode">What's the Reference Node, and why should I care?</a> ###
+How do I see what's in a manual Index?::
 
-		The reference node is not special. It just happens to be a node that exists when the database is started. That it happens to have ID 0 should be unimportant.
-
-		Ignore it. Your nodes are important, your indexes are important. The reference node is not.  We will remove the reference node in future releases of Neo4j.
-
-		### <a id="indexcontents">How do I see what's in an Index?</a> ###
-
-		If you want to find out the contents of an index, it's quite easy in Cypher.
+		If you want to find out the contents of a manual index, it's quite easy in Cypher.
 
 		For a node index called "people" you just use this:
 
 		    START n=node:people('*:*')
 		    RETURN n
 
-		### <a id="autoindexing">How do I enable auto-indexing in Server?</a> ###
+How do I enable auto-indexing for manual index in Neo4j?::
 
-		You have to enable auto indexing in the Neo4J server configuration.  Edit the *neo4j.properties* file:
+		This is a legacy feature! See http://docs.neo4j.org/chunked/stable/query-schema-index.html[the current Cypher doc]
+		for the recommended approach to this.
 
-		     # Autoindexing
+		For older approaches, you have to enable auto indexing in the Neo4J server configuration.  Edit the *neo4j.properties* file:
 
-		     # Enable auto-indexing for nodes, default is false
-		     node_auto_indexing=true
+        [source]
+        ----
+		# Autoindexing
 
-		     # The node property keys to be auto-indexed, if enabled
-		     node_keys_indexable=name,age
+		# Enable auto-indexing for nodes, default is false
+		node_auto_indexing=true
+
+		# The node property keys to be auto-indexed, if enabled
+		node_keys_indexable=name,age
 
 
-		     # Enable auto-indexing for relationships, default is false
-		     relationship_auto_indexing=true
+		# Enable auto-indexing for relationships, default is false
+		relationship_auto_indexing=true
 
-		     # The relationship property keys to be auto-indexed, if enabled
-		     relationship_keys_indexable=name,age
+		# The relationship property keys to be auto-indexed, if enabled
+		relationship_keys_indexable=name,age
 
 		Be sure to restart the server.  Once you've enabled it, by default your nodes and relationships will be indexed lazily.
-		(See also: http://docs.neo4j.org/chunked/milestone/auto-indexing.html#auto-indexing-config)
+		(See also: http://docs.neo4j.org/chunked/milestone/auto-indexing.html#auto-indexing-config[the docs])
 
 		We'll be replacing indexing in the future.
