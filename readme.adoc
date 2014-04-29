@@ -126,10 +126,10 @@ WebAdmin shows that there are nodes in my database, when I just deleted them all
 		hundreds of thousands/millions/billions of nodes then being 1000 or so out doesn't matter
 		all that much to the ops folks which is why Webadmin makes a far cheaper call.
 +
-		If you run a cluster, the Webadmin view of number of nodes will be even more inconsistent
-		since each instance in the cluster gets its own set of IDs to hand out. Again for large graphs,
-		this is inconsequential, but for checking the correctness of your data during development, run the
-		Cypher count query `match (n) return count(n)`
+If you run a cluster, the Webadmin view of number of nodes will be even more inconsistent
+since each instance in the cluster gets its own set of IDs to hand out. Again for large graphs,
+this is inconsequential, but for checking the correctness of your data during development, run the
+Cypher count query `match (n) return count(n)`
 
 Are Node ID's like an Identity Column?::
 
